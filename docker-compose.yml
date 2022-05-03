@@ -1,0 +1,27 @@
+version: '3.7'
+services:
+  php:
+    container_name: phpapp
+    extra_hosts: 
+      - "host.docker.internal:host-gateway"
+    environment:
+      XDEBUG_MODE: "${XDEBUG_MODE}"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    hostname: phpapp
+    init: true
+    ports:
+      - "8111:8111"
+    volumes:
+      - type: "bind"
+        source: "."
+        target: "/demo"
+      # - type: "bind"
+      #   source: "/tmp/xdebug"
+      #   target: "/tmp/xdebug"
+    security_opt:
+      - seccomp:unconfined
+    cap_add:
+      - SYS_PTRACE
+
